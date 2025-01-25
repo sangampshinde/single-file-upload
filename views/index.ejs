@@ -18,23 +18,30 @@
                 <button type="submit" class="btn btn-primary m-3">upload</button>
             </form>
             <h2 class="mt-5">Uploaded Files</h2>
-            <ul class="list-group list-group-flush">
-                <% files.forEach((file)=>{ %>
-                    <li class="list-group-item">
-                        <a href="/uploads/<%=file%>" target="_blank"><%=file%></a>
-                        <form action="/delete" method="POST" >
-                            <input>
-                            <input>
-                        </form>
-
-                    </li>
-                })%>
-
-            </ul>
-
-        </center>
-    </div>
-
-    
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">File Name</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% files.forEach((file) => { %>
+                            <tr>
+                                <td>
+                                    <a href="/uploads/<%= file %>" target="_blank"><%= file %></a>
+                                </td>
+                                <td>
+                                    <form action="/delete" method="POST" class="d-inline">
+                                        <input type="hidden" name="filename" value="<%= file %>">
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
 </body>
 </html>

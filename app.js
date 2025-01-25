@@ -1,4 +1,5 @@
 import express, { urlencoded } from 'express';
+import { fileURLToPath } from 'url';
 import dotenv from 'dotenv';
 import multer from 'multer';
 import cors from 'cors';
@@ -8,6 +9,8 @@ import fs from 'fs';
 dotenv.config();
 const app = express();
 const PORT = process.env.PORT || 2000;
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 console.log(PORT);
 
 // Middleware
@@ -140,8 +143,9 @@ app.post('/uploads',upload.single('file'),(req,res)=>{
 app.post('/delete',(req,res)=>{
     // syntax
     // const filePath = path.join('folder', 'subfolder', 'file.txt');
-const filePath = path.join(__dirname,'uploads',req.body.filename);
+    const filePath = path.join(__dirname, 'uploads', req.body.filename);
     fs.unlink(filePath,(error)=>{
+        console.log(error);
         if(error){
             return res.status(404).send('File Not Found');
         }
